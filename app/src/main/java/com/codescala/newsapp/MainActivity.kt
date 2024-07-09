@@ -3,7 +3,10 @@ package com.codescala.newsapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.codescala.newsapp.presentation.onboarding.OnboardingScreen
 import com.codescala.newsapp.ui.theme.NewsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +15,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             NewsAppTheme {
-
+                Surface(
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    OnboardingScreen()
+                }
             }
         }
     }
