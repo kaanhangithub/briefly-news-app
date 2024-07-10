@@ -31,7 +31,6 @@ fun PageIndicator(
                 modifier = Modifier.size(IndicatorSize)
                     .clip(CircleShape)
                     .background(color = if (index == selectedPage) selectedColor else unselectedColor)
-
             )
         }
     }
