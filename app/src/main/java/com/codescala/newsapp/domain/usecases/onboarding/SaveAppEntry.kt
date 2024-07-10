@@ -1,4 +1,4 @@
-package com.codescala.newsapp.domain.usecases
+package com.codescala.newsapp.domain.usecases.onboarding
 
 import com.codescala.newsapp.domain.manager.LocalUserManager
 
