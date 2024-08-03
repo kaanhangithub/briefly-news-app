@@ -7,6 +7,7 @@ import com.codescala.newsapp.data.repository.NewsRepositoryImpl
 import com.codescala.newsapp.domain.manager.LocalUserManager
 import com.codescala.newsapp.domain.repository.NewsRepository
 import com.codescala.newsapp.domain.usecases.news.GetNewsUseCase
+import com.codescala.newsapp.domain.usecases.news.SearchNewsUseCase
 import com.codescala.newsapp.domain.usecases.onboarding.ReadAppEntry
 import com.codescala.newsapp.domain.usecases.onboarding.SaveAppEntry
 import com.codescala.newsapp.utils.Constants.BASE_URL
@@ -53,4 +54,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsUseCase(newsRepository: NewsRepository): GetNewsUseCase = GetNewsUseCase(newsRepository)
+
+    @Provides
+    @Singleton
+    fun provideSearchNewsUseCase(newsRepository: NewsRepository): SearchNewsUseCase = SearchNewsUseCase(newsRepository)
 }
