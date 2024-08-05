@@ -10,7 +10,10 @@ import com.codescala.newsapp.data.remote.NewsApi
 import com.codescala.newsapp.data.repository.NewsRepositoryImpl
 import com.codescala.newsapp.domain.manager.LocalUserManager
 import com.codescala.newsapp.domain.repository.NewsRepository
+import com.codescala.newsapp.domain.usecases.news.DeleteArticleUseCase
 import com.codescala.newsapp.domain.usecases.news.GetNewsUseCase
+import com.codescala.newsapp.domain.usecases.news.GetSavedArticlesUseCase
+import com.codescala.newsapp.domain.usecases.news.InsertArticleUseCase
 import com.codescala.newsapp.domain.usecases.news.SearchNewsUseCase
 import com.codescala.newsapp.domain.usecases.onboarding.ReadAppEntry
 import com.codescala.newsapp.domain.usecases.onboarding.SaveAppEntry
@@ -54,18 +57,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(newsApi: NewsApi): NewsRepository = NewsRepositoryImpl(newsApi)
-
-    @Provides
-    @Singleton
-    fun provideNewsUseCase(newsRepository: NewsRepository): GetNewsUseCase = GetNewsUseCase(newsRepository)
-
-    @Provides
-    @Singleton
-    fun provideSearchNewsUseCase(newsRepository: NewsRepository): SearchNewsUseCase = SearchNewsUseCase(newsRepository)
-
-    @Provides
-    @Singleton
     fun provideNewsDatabase(
         application: Application
     ): NewsDatabase {
@@ -83,4 +74,28 @@ object AppModule {
     fun provideNewsDao(
         newsDatabase: NewsDatabase
     ): NewsDao = newsDatabase.newsDao
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(newsApi: NewsApi, newsDao: NewsDao): NewsRepository = NewsRepositoryImpl(newsApi, newsDao)
+
+    @Provides
+    @Singleton
+    fun provideNewsUseCase(newsRepository: NewsRepository): GetNewsUseCase = GetNewsUseCase(newsRepository)
+
+    @Provides
+    @Singleton
+    fun provideSearchNewsUseCase(newsRepository: NewsRepository): SearchNewsUseCase = SearchNewsUseCase(newsRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetArticlesUseCase(newsRepository: NewsRepository): GetSavedArticlesUseCase = GetSavedArticlesUseCase(newsRepository)
+
+    @Provides
+    @Singleton
+    fun provideInsertArticleUseCase(newsRepository: NewsRepository): InsertArticleUseCase = InsertArticleUseCase(newsRepository)
+
+    @Provides
+    @Singleton
+    fun provideDeleteArticleUseCase(newsRepository: NewsRepository): DeleteArticleUseCase = DeleteArticleUseCase(newsRepository)
 }

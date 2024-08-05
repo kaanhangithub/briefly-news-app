@@ -17,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.codescala.newsapp.R
 import com.codescala.newsapp.presentation.Dimens
 import com.codescala.newsapp.presentation.onboarding.Page
@@ -30,24 +31,25 @@ fun OnboardingPage(
     Column(modifier = modifier) {
         Image(
             modifier = Modifier
+                .padding(top = 40.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(fraction = 0.6f),
             painter = painterResource(id = page.image),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillHeight
         )
         Spacer(modifier = Modifier.height(Dimens.MediumPadding1))
         Text(
             text = page.title,
             modifier.padding(horizontal = Dimens.MediumPadding2),
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-            color = colorResource(id = R.color.display_small)
+            color = colorResource(id = R.color.text)
         )
         Text(
             text = page.description,
             modifier.padding(horizontal = Dimens.MediumPadding2),
             style = MaterialTheme.typography.bodyMedium,
-            color = colorResource(id = R.color.text_medium)
+            color = colorResource(id = R.color.body)
         )
     }
 }

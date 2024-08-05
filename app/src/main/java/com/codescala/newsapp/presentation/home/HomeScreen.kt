@@ -26,14 +26,12 @@ import com.codescala.newsapp.R
 import com.codescala.newsapp.domain.model.Article
 import com.codescala.newsapp.presentation.Dimens.MediumPadding1
 import com.codescala.newsapp.presentation.common.ArticlesList
-import com.codescala.newsapp.presentation.common.SearchBar
-import com.codescala.newsapp.presentation.navgraph.Route
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     articles: LazyPagingItems<Article>,
-    navigate: (String) -> Unit
+    navigateToDetails: (Article) -> Unit
 ) {
     val titles by remember {
         derivedStateOf {
@@ -50,33 +48,16 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = MediumPadding1)
             .statusBarsPadding()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_logo),
+            painter = painterResource(id = R.drawable.file_logo),
             contentDescription = null,
             modifier = Modifier
-                .width(150.dp)
-                .height(30.dp)
-                .padding(horizontal = MediumPadding1)
+                .width(220.dp)
+                .height(90.dp)
+                .padding(start= 20.dp),
         )
-        
-        Spacer(modifier = Modifier.height(MediumPadding1))
-        
-        SearchBar(
-            modifier = Modifier
-                .padding(horizontal = MediumPadding1),
-            text = "",
-            readOnly = true,
-            onValueChange = {},
-            onSearch = {},
-            onClick = {
-                navigate(Route.SearchScreen.route)
-            }
-        )
-
-        Spacer(modifier = Modifier.height(MediumPadding1))
 
         Text(
             text = titles,
@@ -85,7 +66,7 @@ fun HomeScreen(
                 .padding(horizontal = MediumPadding1)
                 .basicMarquee(),
             fontSize = 12.sp,
-            color = colorResource(id = R.color.placeholder)
+            color = colorResource(id = R.color.text)
         )
 
         Spacer(modifier = Modifier.height(MediumPadding1))
@@ -94,7 +75,7 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
             onClick = {
-                navigate(Route.DetailsScreen.route)
+                navigateToDetails(it)
             }
         )
     }

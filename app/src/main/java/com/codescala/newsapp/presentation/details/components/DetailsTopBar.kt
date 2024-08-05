@@ -31,8 +31,8 @@ fun DetailsTopBar(
         modifier = Modifier.fillMaxWidth(),
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.Transparent,
-            actionIconContentColor = colorResource(id = R.color.body),
-            navigationIconContentColor = colorResource(id = R.color.body),
+            actionIconContentColor = colorResource(id = R.color.text),
+            navigationIconContentColor = colorResource(id = R.color.text),
         ),
         title = {},
         navigationIcon = {
@@ -72,8 +72,8 @@ fun DetailsTopBar(
 fun DetailsTopBarPreview() {
     NewsAppTheme(dynamicColor = false) {
         DetailsTopBar(
-            onShareClick = { /*TODO*/ },
-            onBookMarkClick = { /*TODO*/ },
+            onShareClick = {},
+            onBookMarkClick = {},
             onBrowsingClick = {}) {
 
         }

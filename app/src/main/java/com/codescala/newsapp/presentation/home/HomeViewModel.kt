@@ -16,8 +16,9 @@ class HomeViewModel @Inject constructor(
             "bbc-news",
             "cnn",
             "fox-news",
-            "the-wall-street-journal",
-            "the-washington-post"
+            "google-news",
+            "the-verge",
+            "techcrunch"
         )
     ).cachedIn(viewModelScope)
 }
