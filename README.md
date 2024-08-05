@@ -38,7 +38,7 @@
 ## Build Process
 ### Installation
 
-* Clone the repository: https://github.com/yourusername/Briefly.git
+* Clone the repository
 
 * Open the project in Android Studio
 
