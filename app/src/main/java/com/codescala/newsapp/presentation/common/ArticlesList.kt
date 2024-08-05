@@ -14,13 +14,38 @@ import com.codescala.newsapp.domain.model.Article
 import com.codescala.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.codescala.newsapp.presentation.Dimens.MediumPadding1
 
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+    if (articles.isEmpty()){
+        EmptyScreen()
+    }
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(all = ExtraSmallPadding2)
+    ) {
+        items(
+            count = articles.size,
+        ) {
+            val article = articles[it]
+            ArticleCard(article = article, onClick = { onClick(article) })
+        }
+    }
+
+}
+
 @Composable
 fun ArticlesList(
     modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
     onClick: (Article) -> Unit
 ) {
-    val handlePagingResult = handlePagingResult(articles = articles)
+    val handlePagingResult = handlePagingResult(articles)
 
     if (handlePagingResult) {
         LazyColumn(
@@ -28,12 +53,11 @@ fun ArticlesList(
             verticalArrangement = Arrangement.spacedBy(MediumPadding1),
             contentPadding = PaddingValues(all = ExtraSmallPadding2)
         ) {
-            items(count = articles.itemCount) { index ->
-                articles[index]?.let { article ->
-                    ArticleCard(
-                        article = article,
-                        onClick = { onClick(article) }
-                    )
+            items(
+                count = articles.itemCount,
+            ) {
+                articles[it]?.let { article ->
+                    ArticleCard(article = article, onClick = { onClick(article) })
                 }
             }
         }
@@ -41,9 +65,7 @@ fun ArticlesList(
 }
 
 @Composable
-fun handlePagingResult(
-    articles: LazyPagingItems<Article>
-): Boolean {
+fun handlePagingResult(articles: LazyPagingItems<Article>): Boolean {
     val loadState = articles.loadState
     val error = when {
         loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
@@ -59,11 +81,16 @@ fun handlePagingResult(
         }
 
         error != null -> {
-            EmptyScreen()
+            EmptyScreen(error = error)
             false
         }
-
-        else -> true
+        articles.itemCount == 0 -> {
+            EmptyScreen(failedSearch = true)
+            false
+        }
+        else -> {
+            true
+        }
     }
 }
 

@@ -65,7 +65,7 @@ fun ArticleCard(
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.labelSmall,
-                color = colorResource(id = R.color.text_title),
+                color = colorResource(id = R.color.text),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
@@ -78,20 +78,20 @@ fun ArticleCard(
                 Text(
                     text = article.source.name,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                    color = colorResource(id = R.color.body)
+                    color = colorResource(id = R.color.text)
                 )
                 Spacer(modifier = modifier.width(ExtraSmallPadding2))
                 Icon(
                     modifier = modifier.size(SmallIconSize),
                     painter = painterResource(id = R.drawable.ic_time),
                     contentDescription = null,
-                    tint = colorResource(id = R.color.body)
+                    tint = colorResource(id = R.color.text)
                 )
                 Spacer(modifier = modifier.width(ExtraSmallPadding2))
                 Text(
                     text = article.publishedAt.dropLast(10),
                     style = MaterialTheme.typography.labelSmall,
-                    color = colorResource(id = R.color.body)
+                    color = colorResource(id = R.color.text)
                 )
             }
         }

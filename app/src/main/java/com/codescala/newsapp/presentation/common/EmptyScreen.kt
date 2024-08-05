@@ -3,7 +3,6 @@ package com.codescala.newsapp.presentation.common
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,18 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
-import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-
 import com.codescala.newsapp.R
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 @Composable
-fun EmptyScreen(error: LoadState.Error? = null) {
+fun EmptyScreen(error: LoadState.Error? = null, failedSearch: Boolean = false) {
 
     var message by remember {
         mutableStateOf(parseErrorMessage(error = error))
@@ -43,10 +40,16 @@ fun EmptyScreen(error: LoadState.Error? = null) {
         mutableStateOf(R.drawable.ic_network_error)
     }
 
-    if (error == null){
+    if (error == null) {
         message = "You have not saved news so far !"
         icon = R.drawable.ic_search_document
     }
+
+    if (failedSearch) {
+        message = "News Not Found."
+        icon = R.drawable.ic_search_document
+    }
+
 
     var startAnimation by remember {
         mutableStateOf(false)
@@ -54,7 +57,8 @@ fun EmptyScreen(error: LoadState.Error? = null) {
 
     val alphaAnimation by animateFloatAsState(
         targetValue = if (startAnimation) 0.3f else 0f,
-        animationSpec = tween(durationMillis = 1000)
+        animationSpec = tween(durationMillis = 1000),
+        label = ""
     )
 
     LaunchedEffect(key1 = true) {
@@ -75,7 +79,7 @@ fun EmptyContent(alphaAnim: Float, message: String, iconId: Int) {
         Icon(
             painter = painterResource(id = iconId),
             contentDescription = null,
-            tint = if (isSystemInDarkTheme()) LightGray else DarkGray,
+            tint =  DarkGray,
             modifier = Modifier
                 .size(120.dp)
                 .alpha(alphaAnim)
@@ -86,7 +90,7 @@ fun EmptyContent(alphaAnim: Float, message: String, iconId: Int) {
                 .alpha(alphaAnim),
             text = message,
             style = MaterialTheme.typography.bodyMedium,
-            color = if (isSystemInDarkTheme()) LightGray else DarkGray,
+            color =  DarkGray,
         )
     }
 }
@@ -112,5 +116,5 @@ fun parseErrorMessage(error: LoadState.Error?): String {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun EmptyScreenPreview() {
-    EmptyContent(alphaAnim = 0.3f, message = "Internet Unavailable.",R.drawable.ic_network_error)
+    EmptyContent(alphaAnim = 0.3f, message = "Internet Unavailable.", R.drawable.ic_network_error)
 }
